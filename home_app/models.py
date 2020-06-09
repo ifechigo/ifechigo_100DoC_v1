@@ -12,10 +12,10 @@ class Login(models.Model):
 
 class Signup(models.Model):
     signupUsername = models.CharField(max_length=100)
+    signupEmail = models.EmailField(max_length=100)
     signupPassword = models.CharField(max_length=50)
     signupConfirmPassword = models.CharField(max_length=50)
-    signupEmail = models.EmailField(max_length=100)
-    signup = models.DateTimeField(auto_now=True)
+    signuptime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return '{}'.format(self.signupConfirmPassword,
