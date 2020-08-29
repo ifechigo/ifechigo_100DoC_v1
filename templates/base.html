@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <title>ifechigo</title>
- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
- <link rel="stylesheet" href="./static/css/style.css">
+    <meta charset="UTF-8">
+    <title>ifechigo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="./static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="./static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body style="background: url(./static/images/img-6.jpg);
- background-size: cover;
- background-repeat: no-repeat;
- background-position: center;">
- <header>
-  <nav class="nav-wrapper">
-   <a href="/" class="logo container">Ifechigo</a>
+<body style="background-color: gray;">
+<header>
+    <nav class="blue" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/" class="brand-logo"
+               style="text-decoration: none;">Ifechigo</a>
+            <a style="text-decoration: none;" href="#" data-target="nav-mobile"
+               class="sidenav-trigger waves-effect hide-on-large-only">
+                <i style="font-size: 36px;" class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a style="text-decoration: none;" href="/">Home</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a style="text-decoration: none;" href="/logout">logout</a></li>
+                {% else %}
+                    <li><a style="text-decoration: none;" href="/signup">signup</a></li>
+                    <li><a style="text-decoration: none;" href="/login">login</a></li>
+                {% endif %}
+                <li><a style="text-decoration: none;" href="/about">about</a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul id="nav-mobile" class="sidenav blue">
+        <li><a style="text-decoration: none;" href="/">Home</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a style="text-decoration: none;" href="/logout">logout</a></li>
+        {% else %}
+            <li><a style="text-decoration: none;" href="/signup">signup</a></li>
+            <li><a style="text-decoration: none;" href="/login">login</a></li>
+        {% endif %}
+        <li><a style="text-decoration: none;" href="/about">about</a></li>
+    </ul>
+</header>
 
-   <ul id="nav-mobile" class="right">
-    <li role="presentation"><a href="/">Home</a></li>
-    <li role="presentation"><a href="/signup">signup</a></li>
-    <li role="presentation"><a href="/login">login</a></li>
-    <li role="presentation"><a href="/about">about</a></li>
-   </ul>
-  </nav>
- </header>
 
-
- <div>
+<div>
     {% block content %}
 
     {% endblock content %}
 
- </div>
+</div>
 
 
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+
+</script>
 </body>
 </html>

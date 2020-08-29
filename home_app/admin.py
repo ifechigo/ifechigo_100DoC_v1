@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Login, Signup
+from .models import Product, UserGroup
 
 
 # Register your models here.
-admin.site.register(Login)
-admin.site.register(Signup)
+admin.site.register(Product)
+admin.site.register(UserGroup)
 
 

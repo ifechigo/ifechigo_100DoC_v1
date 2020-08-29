@@ -1,39 +1,96 @@
-from . import models
-from django.shortcuts import render
+from .forms import CreateUserForm, ProductForm
+from .models import Product
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
+@login_required(login_url='login')
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home_app/home.html')
 
 
-def login(request):
-    loginUsername = request.POST.get('loginUsername')
-    loginPassword = request.POST.get('loginPassword')
-    # b = models.Login.objects.create(loginPassword=loginPassword)
-    # models.Login.objects.create(loginUsername=loginUsername)
-    print(loginUsername, loginPassword)
-
-    return render(request, 'home_app/login.html')
+def welcome(request):
+    return render(request, 'home_app/welcome.html')
 
 
-def signup(request):
-    signupUsername = request.POST.get('signupUsername')
-    signupEmail = request.POST.get('signupEmail')
-    signupPassword = request.POST.get('signupPassword')
-    signupConfirmPassword = request.POST.get('signupConfirmPassword')
+def signupPage(request):
+    form = CreateUserForm
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, user + " created successfully")
+            return redirect('login')
+    context = {'form': form}
+    return render(request, 'home_app/signup.html', context)
 
-    confirmation = request.POST.get
-    def confirmation(signupPassword, signupConfirmPassword, result):
-        if signupPassword != signupConfirmPassword:
-            return 'password doesnt confirm with each other'
+
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('welcome')
+        else:
+            messages.info(request, 'username or password is incorrect')
+    context = {}
+    return render(request, 'home_app/login.html', context)
 
 
-    print(signupUsername, signupEmail,
-          signupPassword, signupConfirmPassword)
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 
-    return render(request, 'home_app/signup.html')
+
+@login_required(login_url='login')
+def prod(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('/show')
+            except:
+                pass
+    else:
+        form = ProductForm()
+    return render(request, 'product', {'form': form})
+
+
+@login_required(login_url='login')
+def showprod(request):
+    products = Product.objects.all()
+    return render(request, 'showprod', {'products': products})
+
+
+@login_required(login_url='login')
+def editprod(request, id):
+    product = Product.objects.get(id=id)
+    return render(request, 'editprod', {'product': product})
+
+
+@login_required(login_url='login')
+def updateprod(request, id):
+    product = Product.objects.get(id=id)
+    form = ProductForm(request.POST, instance=product)
+    if form.is_valid():
+        form.save()
+        return redirect('show')
+    return render(request, 'editprod', {'product': product})
+
+
+@login_required(login_url='login')
+def deleteprod(request, id):
+    product = Product.objects.get(id=id)
+    product.delete()
+    return redirect('show')
 
 
 def about(request):
-    return render(request, 'home_app/about.html')
+    return render(request, 'myapp/about.html')

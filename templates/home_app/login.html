@@ -1,31 +1,50 @@
-{% extends 'base.html' %}
-action="{% url 'about' %}"
-{% block content %}
-<div style=" margin: auto; height: 200px;
-width: 400px; background: #444;">
-  <main class="container" style="margin-top: 100px;
-  margin-bottom: 100px;">
-      <form method="post">
-          {% csrf_token %}
-          <div class="form-group row">
-              <label for="inputText" class="col-sm-2 col-form-label">Username</label>
-              <div class="col-sm-8">
-                  <input type="text" name="loginUsername" class="form-control" id="inputText">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-8">
-                  <input type="password" name="loginPassword" class="form-control" id="inputPassword">
-              </div>
-          </div>
-          <div class="form-group row">
-              <div class="col-sm-8">
-                  <button type="submit" class="btn btn-primary">Login</button>
-              </div>
-          </div>
-      </form>
-  </main>
-</div>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" type="text/css" href="../static/css/login_style.css">
+ <title>Document</title>
+</head>
+<body>
+ <div class="login-page">
+       <div class="wrap">
+        <span class="imxg"></span>
+        <p>Login</p>
+       </div>
+       <form class="lgfm" method="post" action="">
+           {% csrf_token %}
+           <div class="input-sec">
+               <label for="username">username</label>
+               <div>
+                   <input type="text"
+                          name="username" id="username"
+                          class="labl">
+               </div>
+           </div>
+           <div class="input-sec">
+               <label for="password">password</label>
+               <div>
+                   <input type="password"
+                          name="password" id="password"
+                          class="labl">
+               </div>
+           </div>
 
-{% endblock content %}
+           <div class="subtn">
+               <button type="submit" class="btn-lgin">Login</button>
+           </div>
+
+       </form>
+
+       <div class="btmcxt">
+          {% for message in messages %}
+          <p class="ermsg">{{message}}</p>
+          {% endfor %}
+               <p>not yet registered?
+                   <a href="{% url 'signup' %}">click here</a>
+               </p>
+       </div>
+ </div>
+</body>
+</html>
+

@@ -1,24 +1,26 @@
 from django.db import models
-
+# from .forms import CreateUserForm
 
 # Create your models here.
-class Login(models.Model):
-    loginUsername = models.CharField(max_length=100)
-    loginPassword = models.CharField(max_length=50)
+
+
+class Product(models.Model):
+    pro_id = models.IntegerField()
+    pro_img = models.ImageField
+    pro_desc = models.CharField(max_length=150)
+    pro_price = models.IntegerField()
+
+    class Meta:
+        db_table = "product"
+
+
+class UserGroup(Product):
+    is_admin = models.BooleanField()
+    is_customer = models.BooleanField()
 
     def __str__(self):
-        return '{}'.format(self.loginUsername, self.loginPassword)
+        return self.pro_id
 
 
-class Signup(models.Model):
-    signupUsername = models.CharField(max_length=100)
-    signupEmail = models.EmailField(max_length=100)
-    signupPassword = models.CharField(max_length=50)
-    signupConfirmPassword = models.CharField(max_length=50)
-    signuptime = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return '{}'.format(self.signupConfirmPassword,
-                           self.signupEmail,
-                           self.signupPassword,
-                           self.signupUsername)
+class UserAdmin(models.Model):
+    user = models.OneToOneField(UserGroup, on_delete=models.CASCADE)
